@@ -1,0 +1,30 @@
+---
+- name: centos | Add key for ELRepo 
+  ansible.builtin.rpm_key:
+    key: "{{ elrepo_key }}"
+    fingerprint: "{{ elrepo_fp }}"
+    state: present
+  become: true
+
+- name: centos | Add ElRepo for kmod-drbd
+  ansible.builtin.yum_repository:
+    mirrorlist: "{{ elrepo_url }}"
+    name: "elrepo"
+    gpgkey: "{{ elrepo_key }}"
+    gpgcheck: yes
+    description: "ELRepo.org Centos8"
+    state: present
+  become: true
+
+- name: centos | Installing DRBD packages
+  yum:
+    name: "{{ drbd_rpm_packages }}"
+    state: present
+  become: true
+
+- name: centos | Installing Heartbeat Package
+  yum:
+    name: heartbeat
+    state: present
+  become: true
+  when: drbd_use_heartbeat
