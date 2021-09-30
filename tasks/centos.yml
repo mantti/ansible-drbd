@@ -28,3 +28,20 @@
     state: present
   become: true
   when: drbd_use_heartbeat
+
+- name: centos | Disable usage-count
+  lineinfile:
+    path: "/etc/drbd.d/global_common.conf"
+    regexp: "usage-count yes;"
+    line: "   usage-count no;"
+    state: present
+  become: true
+  when: not drbd_usage_count
+
+- name: centos | Default to drbd Protocol C
+  lineinfile:
+    path: "/etc/drbd.d/global_common.conf"
+    regexp: "# protocol timeout max-epoch-size max-buffers"
+    line: "   protocol C;"
+    state: present
+  become: true

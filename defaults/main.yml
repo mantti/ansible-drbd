@@ -38,6 +38,7 @@ drbd_deb_packages: ['drbd8-utils']
 drbd_rpm_packages: ['drbd90-utils', 'kmod-drbd90', 'drbd-bash-completion', 'drbd-pacemaker']
 
 # Toggle
+drbd_usage_count: false
 drbd_use_heartbeat: false
 drbd_use_parted: true
 drbd_unicast_mode: false
